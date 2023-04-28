@@ -1,0 +1,18 @@
+  console.log("On graph construction")
+  console.log(table_data.length)
+  const graph = {edges:[], nodes:[]}
+  let node_counter = 1;
+
+  table_data.forEach(table => {
+    console.log("On table",table.tablename)
+    table.forEach(tableRow => {
+
+    let node = {
+      id:node_counter,
+      label:tableRow.find(element=>element.endsWith('_name'))
+    }
+    node_counter++;
+    });
+    graph.nodes.push(node)
+    console.log(node)
+  });

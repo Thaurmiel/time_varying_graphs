@@ -119,7 +119,7 @@ while(counter<=workerAmount)
 {
   let workerTeam = getRandomInt(1, teamAmount)
   let workerName = "Worker "+counter;
-  let workerOU = teams.tableRows.find(x=>x.id == workerTeam).t_ou_id;
+  //let workerOU = teams.tableRows.find(x=>x.id == workerTeam).t_ou_id; not used anymore
   
   let tableData = 
   {

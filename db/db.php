@@ -3,7 +3,7 @@
 echo "<p>Create database</p>";
 $name= "localhost";
 $user= "root";
-$password= "";
+$password= "Supern0va";
 $target_db="GG_BK";
 $conn = mysqli_connect($name, $user, $password) or die(mysqli_error()); 
 $db_string = mysqli_query($conn,"DROP DATABASE IF EXISTS $target_db ");
@@ -74,17 +74,11 @@ if($db_string)
         `id` INT NOT NULL AUTO_INCREMENT ,
         `w_name` VARCHAR(255) NOT NULL ,
         `w_team_id` INT NOT NULL DEFAULT 1,
-        `w_ou_id` INT NOT NULL ,
+
 
         INDEX  (`w_team_id`),
             FOREIGN KEY (`w_team_id`)
             REFERENCES $target_db.`TEAMS`(`id`)
-            ON UPDATE CASCADE
-            ON DELETE CASCADE,
-
-        INDEX (`w_ou_id`),
-            FOREIGN KEY (`w_ou_id`)
-            REFERENCES $target_db.`OU`(`id`)
             ON UPDATE CASCADE
             ON DELETE CASCADE,
         PRIMARY KEY (`id`)) ENGINE = InnoDB; 
@@ -95,8 +89,8 @@ if($db_string)
     (
         `id` INT NOT NULL AUTO_INCREMENT,
         `m_name` VARCHAR(255) NOT NULL ,
-        `m_start_time` INT NOT NULL DEFAULT UNIX_TIMESTAMP(),
-        `m_end_time` INT NOT NULL DEFAULT DATE_ADD(CURRENT_TIMESTAMP, INTERVAL 1 HOUR),
+        `m_start_time` VARCHAR(20) NOT NULL ,
+        `m_end_time` VARCHAR(20) NOT NULL ,
         `m_room_id` INT NOT NULL,
 
         INDEX (`m_room_id`),
@@ -115,7 +109,7 @@ if($db_string)
         `id` INT NOT NULL AUTO_INCREMENT ,
         `s_id` INT NOT NULL ,
         `w_id` INT NOT NULL ,
-        `event_time` INT NOT NULL DEFAULT UNIX_TIMESTAMP(),
+        `event_time` VARCHAR(20) NOT NULL,
         `event_type` VARCHAR(10) NOT NULL DEFAULT 'IN',
 
         INDEX (`s_id`),

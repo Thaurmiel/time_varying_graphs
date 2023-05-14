@@ -1,14 +1,22 @@
 const socket = io();
+
+const min_field = document.getElementById('min');
+const max_field= document.getElementById('max');
+
+socket.on('graph_time_data',(time_data)=>{
+
+  min_field.innerHTML = new Date(time_data.min).toUTCString();
+  max_field.innerHTML = new Date(time_data.max).toUTCString();
+  console.log(time_data)
+})
+
 socket.on('graph_data',(graph)=>{
-    console.log(graph)
     const container = document.getElementById("mynetwork");
-
-
-    var nodesDataset = new vis.DataSet(graph.nodes); 
-    var edgesDataset = new vis.DataSet(graph.edges); 
+    let nodesDataset = new vis.DataSet(graph.nodes); 
+    let edgesDataset = new vis.DataSet(graph.edges); 
     let data = {nodes:nodesDataset, edges:edgesDataset}
 
-    var options = {
+    let options = {
         edges: {
           smooth: false
         },

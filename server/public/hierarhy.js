@@ -2,15 +2,12 @@
 
 const socket = io();
 const graph_element = document.getElementById('graph');
-const container = document.getElementById("mynetwork");
 
 
 let minTime = document.getElementById('x1')
 let maxTime = document.getElementById('x2')
 let rangeButton = document.getElementById('b1')
-let timeRange = document.getElementById('range')
-let nodeAmount = document.getElementById('nodeamount')
-let stabilization = document.getElementById('stabilisation')
+let tiemRange = document.getElementById('range')
 
 let selectedTimestampMin = 0;
 let selectedTimestampMax = 0;
@@ -18,59 +15,9 @@ let network; // vis instance
 let nodesDataset;
 let edgesDataset;
 let view;
-let startTime;
-let endTime;
-
-let options = {
-  nodes: {
-    shape: "dot",
-    scaling: {
-      min: 10,
-      max: 60,
-      label: {
-        min: 8,
-        max: 60,
-        drawThreshold: 8,
-        maxVisible: 60,
-      }
-    },
-    chosen:{
-      label:function(values, id,selected, hovering)
-      {
-        values.size+=20;
-      }
-    }
-  },
-  
-  physics: {
-    stabilization: {
-      enabled: true,
-      iterations: 500,
-      updateInterval: 25,
-    },
-    forceAtlas2Based: {
-      gravitationalConstant: -120,
-      centralGravity: 0.015,
-      springLength: 220,
-      springConstant: 0.125,
-      damping: 0.4
-    },
-    maxVelocity: 150,
-    solver: "forceAtlas2Based",
-    timestep: 0.35
-  },
-  
-  interaction: {
-    tooltipDelay: 200,
-    hideEdgesOnDrag: true,
-    hideEdgesOnZoom: true,
-  },
-}
 
 rangeButton.addEventListener('click', () => {
   // filter events
-
-  
   view = new vis.DataView(nodesDataset, {
     filter: function (node) {
       if ("event_time" in node) {
@@ -80,10 +27,9 @@ rangeButton.addEventListener('click', () => {
       else return node
     }
   })
-  nodeAmount.innerText = view.length
+
   // remove unused nodes
   // remove unused edges
-  
   network.setData({ nodes: view, edges: edgesDataset })
 
 })
@@ -101,8 +47,6 @@ dhr.addEventListener('update', (event) => {
   let maxDateUTC = new Date(selectedTimestampMax)
   minTime.innerText = dateFormat(minDateUTC)
   maxTime.innerText = dateFormat(maxDateUTC)
-  timeRange.innerText = Math.floor((maxDateUTC-minDateUTC)/(1000*60*60)) + " hours"
-  
 });
 
 function dateFormat(date) {
@@ -127,29 +71,40 @@ function addEventNames(nodes)
 
 socket.on('graph_data', (graph) => {
 
+
   addEventNames(graph.nodes)
- 
+  const container = document.getElementById("mynetwork");
   nodesDataset = new vis.DataSet(graph.nodes);
   edgesDataset = new vis.DataSet(graph.edges);
   //eventFormat(nodesDataset, edgesDataset, "sensor_events")
-  console.log(nodesDataset)
+  let data = { nodes: nodesDataset, edges: edgesDataset }
+  console.log(data)
+  let options = {
+    nodes: {
+      shape: "dot",
+      scaling: {
+        min: 10,
+        max: 30,
+        label: {
+          min: 8,
+          max: 30,
+          drawThreshold: 2,
+          maxVisible: 30,
+        }
+      }
+    },
+    layout: {
+      hierarchical: {
+        direction: "UD",
+      },
+    },
+      interaction: {
+        tooltipDelay: 200,
+        hideEdgesOnDrag: true
+      },
+  }
+  network = new vis.Network(container, data, options);
 
-  network = new vis.Network(container, {}, options);
-
-  network.on("startStabilizing", function () {
-    startTime = Date.now();
-  });
-  network.on('stabilizationProgress',(stats)=>{
-    console.log(stats)
-    let str  = stats.iterations + " / " +stats.total;
-    stabilization.innerHTML = str;
-  })
-
-  network.on("stabilizationIterationsDone", function () {
-    endTime = Date.now();
-    console.log("nodes/edges",view.length, "Took s:",(endTime-startTime)/1000)
-    socket.emit("stats",stats=[view.length,(endTime-startTime)/1000])
-  });
 })
 
 

@@ -1,6 +1,6 @@
 import { pool } from './src/connection.mjs';
 import { DataHolder } from './src/dataholder.mjs';
-
+import * as fs from 'fs';
 
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -24,9 +24,13 @@ let graph_ready = false;
 app.get('/', (req, res) => {
   res.sendFile(__dirname + '/public/index.html');// send html
 });
-app.get('/vis', (req, res) => {
-  res.sendFile(__dirname + '/public/vis.html');// send html
+app.get('/htree', (req, res) => {
+  res.sendFile(__dirname + '/public/hierarhy.html');// send html
 });
+app.get('/force', (req, res) => {
+  res.sendFile(__dirname + '/public/force-graph.html');// send html
+});
+
 
 
 
@@ -58,7 +62,16 @@ io.on('connection', (socket) => {
           { from: 3, to: 4 }]
       })
   }
+  socket.on('stats',(stats)=>{
+    console.log(stats)
+    let tmpstr = stats.join()+"\n";
+    fs.appendFile("./server/src/stats.txt", tmpstr, (err) => {
+      if (err) {
+        console.log(err);
+      }
+    });
 
+  })
 
 })
 
@@ -233,6 +246,7 @@ async function get_db_graph() {
 
   console.log(graph.edges.length, graph.nodes.length)
   graph_ready = true;
+
   return graph;
 }
 
@@ -250,7 +264,7 @@ function get_time(graph) {
     node_keys.forEach(key => {
       if (key.endsWith("_time")) {
         const temp_time = node[key]
-
+        
         temp_time > graph_time.max ? graph_time.max = temp_time : "";
         temp_time < graph_time.min ? graph_time.min = temp_time : "";
 
@@ -264,6 +278,7 @@ function get_time(graph) {
         })
       }
     });
+
     graph_time.time.sort(function (a, b) {
       let keyA = a.datetime, keyB = b.datetime;
       // Compare the 2 dates

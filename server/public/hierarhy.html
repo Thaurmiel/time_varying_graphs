@@ -1,0 +1,24 @@
+<head>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vis/4.21.0/vis.min.js" integrity="sha512-XHDcSyqhOoO2ocB7sKOCJEkUjw/pQCJViP1ynpy+EGh/LggzrP6U/V3a++LQTnZT7sCQKeHRyWHfhN2afjXjCg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="https://unpkg.com/dual-range-bar@1.0.2/dist/dual-range-bar.min.js"></script>
+  <link rel="stylesheet" href="styles.css">
+  <!--<script src="../../dist/force-graph.js"></script>-->
+</head>
+
+<body>
+  <div class="data">
+    <p><button id="b1" class="timebutton">Set date range</button></p>
+    <p>Time amount in range<span id="range"></span></p>
+    <p>(From: <span id="x1"></span>, To: <span id="x2"></span>)</p>
+  </div>
+  
+  <div id="dhr"></div>
+  <div id="mynetwork"></div>
+
+
+
+  <script src="hierarhy.js"></script>
+</body>

@@ -37,9 +37,10 @@ const minute = 60 * second; // might be bad
 //const minute = 1; // try late, breaks time adding logics
 const hour = minute * 60;
 const day = hour * 24;
+const month = day* 30;
 
 const timeTick = 10 * minute;
-const simulatedTimeAmount = 12 * day; // 2 weeks
+const simulatedTimeAmount = 2 * month; // 2 months
 const simulatedEndTime = addTime(startTime, simulatedTimeAmount);
 const tickAmount = (simulatedTimeAmount) / timeTick;
 
@@ -47,10 +48,10 @@ const tickAmount = (simulatedTimeAmount) / timeTick;
 // simulation variables
 const roomAmount = 4;
 const ouAmount = 4;
-const workerAmount = 50;
-const teamAmount = 10;
+const workerAmount = 20;
+const teamAmount = 2;
 const sensorAmount = roomAmount;
-const maxMeetingAmount = 4;
+const maxMeetingAmount = 6;
 const maxEventAmount = Math.round(tickAmount * 0.1);
 
 

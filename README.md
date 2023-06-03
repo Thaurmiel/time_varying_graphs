@@ -9,7 +9,7 @@
  
  Kad datubāzei tika pievienoti dati, izmanto komandu: npm run server
  
- Lai pietiktu pie prototipa, izmanto localhost:3000 vietni.
+ Lai tikt pie prototipa tīmekļa lapaspuses, izmanto localhost:3000 vietni.
  
  Lai iegūtu grafa attēlojumu, izmanto bīdītājus, lai izvelēties laika intervālu.
  

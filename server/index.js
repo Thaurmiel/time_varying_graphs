@@ -65,7 +65,7 @@ io.on('connection', (socket) => {
   socket.on('stats',(stats)=>{
     console.log(stats)
     let tmpstr = stats.join()+"\n";
-    fs.appendFile("./server/src/stats.txt", tmpstr, (err) => {
+    fs.appendFile("./server/src/stats_big.txt", tmpstr, (err) => {
       if (err) {
         console.log(err);
       }
@@ -145,6 +145,7 @@ async function get_DB_data() {
 }
 
 async function get_db_graph() {
+  let starttime = Date.now()
 
   const db_data = await get_DB_data();
 
@@ -244,9 +245,10 @@ async function get_db_graph() {
   }
   //console.log("Node connector",node_to_data)
 
-  console.log(graph.edges.length, graph.nodes.length)
-  graph_ready = true;
 
+  graph_ready = true;
+  let endtime = Date.now()
+  console.log("DB data gotten in:",endtime-starttime,"ms;", "Nodes - edges amount in graph:",graph.edges.length, graph.nodes.length)
   return graph;
 }
 

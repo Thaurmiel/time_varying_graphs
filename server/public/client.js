@@ -25,13 +25,13 @@ let options = {
   nodes: {
     shape: "dot",
     scaling: {
-      min: 10,
-      max: 60,
+      min: 4,
+      max: 80,
       label: {
-        min: 8,
-        max: 60,
-        drawThreshold: 8,
-        maxVisible: 60,
+        min: 4,
+        max: 80,
+        drawThreshold: 4,
+        maxVisible: 80,
       }
     },
     chosen:{

@@ -7,3 +7,10 @@ export const pool = mysql.createPool({
     password: 'Supern0va', //
     database: 'gg_bk',
   }).promise()
+
+  export const real_pool = mysql.createPool({
+    host: 'localhost',
+    user: 'root', //
+    password: 'Supern0va', //
+    database: 'employees',
+  }).promise()

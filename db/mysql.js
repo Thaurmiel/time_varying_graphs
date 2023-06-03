@@ -40,18 +40,18 @@ const day = hour * 24;
 const month = day* 30;
 
 const timeTick = 10 * minute;
-const simulatedTimeAmount = 2 * month; // 2 months
+const simulatedTimeAmount = 4 * month; // 2 months
 const simulatedEndTime = addTime(startTime, simulatedTimeAmount);
 const tickAmount = (simulatedTimeAmount) / timeTick;
 
 
 // simulation variables
-const roomAmount = 4;
-const ouAmount = 4;
-const workerAmount = 20;
-const teamAmount = 2;
+const roomAmount = 9;
+const ouAmount = 3;
+const workerAmount = 60;
+const teamAmount = 6;
 const sensorAmount = roomAmount;
-const maxMeetingAmount = 6;
+const maxMeetingAmount = 12;
 const maxEventAmount = Math.round(tickAmount * 0.1);
 
 
